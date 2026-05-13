@@ -59,22 +59,21 @@ fun LaureateDetailScreen(prize: NobelPrize, laureate: Laureate, onBack: () -> Un
             Column(Modifier.padding(16.dp)) {
                 listOf(
                     "Имя" to laureate.fullName,
-                    "Год" to prize.year,
+                    "Год" to prize.awardYear,
                     "Категория" to prize.category.uppercase(),
-                    "Страна" to laureate.country
+                    "Доля" to laureate.portion
                 ).forEach { (label, value) ->
                     Row(Modifier.padding(vertical = 4.dp)) {
                         Text(
                             "$label: ", style = MaterialTheme.typography.bodyMedium,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                         )
-                        Text(value, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
                 Spacer(Modifier.height(12.dp))
                 Text("Мотивация:", style = MaterialTheme.typography.titleSmall)
                 Spacer(Modifier.height(4.dp))
-                Text(laureate.motivation, style = MaterialTheme.typography.bodyMedium)
+                laureate.motivation?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
             }
         }
     }

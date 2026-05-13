@@ -1,9 +1,10 @@
 package com.example.kotlinuniversitykotlin6.domain.model
 
 data class Laureate(
-    val id: String,
+    val id: Int,
+    val prizeId: Int,
     val fullName: String,
-    val motivation: String,
-    val country: String,
+    val portion: String,
+    val motivation: String?,
     val portraitUrl: String?
 )

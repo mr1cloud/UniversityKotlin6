@@ -1,20 +1,24 @@
 package com.example.kotlinuniversitykotlin6.data.mapper
 
-import com.example.kotlinuniversitykotlin6.data.remote.dto.LaureateDto
-import com.example.kotlinuniversitykotlin6.data.remote.dto.NobelPrizeDto
+import com.example.kotlinuniversitykotlin6.data.remote.dto.LaureateResponseDto
+import com.example.kotlinuniversitykotlin6.data.remote.dto.NobelPrizeResponseDto
 import com.example.kotlinuniversitykotlin6.domain.model.Laureate
 import com.example.kotlinuniversitykotlin6.domain.model.NobelPrize
 
-fun NobelPrizeDto.toDomain() = NobelPrize(
-    year = awardYear,
-    category = category?.en ?: "N/A",
-    laureates = laureates?.map { it.toDomain() } ?: emptyList()
+fun NobelPrizeResponseDto.toDomain() = NobelPrize(
+    id = id,
+    awardYear = awardYear,
+    category = category,
+    fullName = fullName,
+    motivation = motivation,
+    laureates = laureates.map { it.toDomain() }
 )
 
-fun LaureateDto.toDomain() = Laureate(
+fun LaureateResponseDto.toDomain() = Laureate(
     id = id,
-    fullName = fullName?.en ?: knownName?.en ?: "Организация",
-    motivation = motivation?.en ?: "Мотивация не указана",
-    country = birth?.place?.country?.en ?: "Неизвестно",
-    portraitUrl = links?.firstOrNull { it.rel == "portrait" }?.href
+    prizeId = prizeId,
+    fullName = fullName,
+    portion = portion,
+    motivation = motivation,
+    portraitUrl = portraitUrl
 )

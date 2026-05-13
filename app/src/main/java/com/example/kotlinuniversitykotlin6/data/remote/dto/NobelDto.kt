@@ -1,53 +1,35 @@
 package com.example.kotlinuniversitykotlin6.data.remote.dto
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NobelPrizesResponse(
-    val nobelPrizes: List<NobelPrizeDto> = emptyList()
+data class LoginRequestDto(
+    val username: String,
+    val password: String
 )
 
 @Serializable
-data class NobelPrizeDto(
-    val awardYear: String = "",
-    val category: CategoryDto? = null,
-    val laureates: List<LaureateDto>? = null
+data class TokenResponseDto(
+    val token: String,
+    val expiresIn: Int
 )
 
 @Serializable
-data class CategoryDto(
-    val en: String = ""
+data class NobelPrizeResponseDto(
+    val id: Int,
+    val awardYear: Int,
+    val category: String,
+    val fullName: String,
+    val motivation: String? = null,
+    val laureates: List<LaureateResponseDto> = emptyList()
 )
 
 @Serializable
-data class MultiLangDto(
-    val en: String = "",
-    val ru: String? = null
-)
-
-@Serializable
-data class LaureateDto(
-    val id: String = "",
-    val fullName: MultiLangDto? = null,
-    val knownName: MultiLangDto? = null,
-    val motivation: MultiLangDto? = null,
-    val birth: BirthDto? = null,
-    val links: List<LinkDto>? = null
-)
-
-@Serializable
-data class BirthDto(
-    val place: PlaceDto? = null
-)
-
-@Serializable
-data class PlaceDto(
-    val country: MultiLangDto? = null
-)
-
-@Serializable
-data class LinkDto(
-    val rel: String = "",
-    val href: String = ""
+data class LaureateResponseDto(
+    val id: Int,
+    val prizeId: Int,
+    val fullName: String,
+    val portion: String,
+    val motivation: String? = null,
+    val portraitUrl: String? = null
 )
