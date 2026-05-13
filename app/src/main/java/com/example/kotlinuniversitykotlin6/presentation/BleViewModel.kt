@@ -1,0 +1,40 @@
+package com.example.kotlinuniversitykotlin6.presentation
+
+import android.bluetooth.BluetoothDevice
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.kotlinuniversitykotlin6.data.BleRepository
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+
+class BleViewModel(
+    private val context: Context,
+    private val repository: BleRepository = BleRepository(context)
+) : ViewModel() {
+
+    val devices: StateFlow<List<BluetoothDevice>> = repository.devices
+    val heartRate: StateFlow<String?> = repository.heartRate
+    val connectionState: StateFlow<String> = repository.connectionState
+    val isScanning: StateFlow<Boolean> = repository.isScanning
+
+    fun startScan() = viewModelScope.launch {
+        repository.startScan()
+    }
+
+    fun stopScan() = viewModelScope.launch {
+        repository.stopScan()
+    }
+
+    fun connect(device: BluetoothDevice) = viewModelScope.launch {
+        repository.connect(device)
+    }
+
+    fun disconnect() = repository.disconnect()
+
+    override fun onCleared() {
+        repository.disconnect()
+        super.onCleared()
+    }
+}
