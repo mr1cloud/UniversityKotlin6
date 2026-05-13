@@ -4,8 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NobelPrizeResponseDto(
-    val year: Int,
+    val id: Int,
+    val awardYear: Int,
     val category: String,
-    val overallMotivation: String?,
+    val fullName: String,
+    val motivation: String?,
     val laureates: List<LaureateResponseDto>
 )

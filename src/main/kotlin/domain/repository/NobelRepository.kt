@@ -4,7 +4,6 @@ import org.example.domain.model.Laureate
 import org.example.domain.model.NobelPrize
 
 interface NobelRepository {
-    fun getAllPrizes(): List<NobelPrize>
-    fun getPrize(year: Int, category: String): NobelPrize?
-    fun getLaureates(year: Int, category: String): List<Laureate>
+    suspend fun getAllPrizes(year: Int?, category: String?): NobelPrize?
+    suspend fun getLaureates(year: Int, category: String): List<Laureate>
 }

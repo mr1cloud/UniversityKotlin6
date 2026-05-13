@@ -7,23 +7,28 @@ import org.example.domain.model.Laureate
 import org.example.domain.model.NobelPrize
 
 fun NobelPrize.toResponse() = NobelPrizeResponseDto(
-    year = year,
+    id = id,
+    awardYear = awardYear,
     category = category,
-    overallMotivation = overallMotivation,
-    laureates = laureates.map { it.toResponse() }
+    fullName = fullName,
+    motivation = motivation,
+    laureates = laureates?.map { it.toResponse() } ?: emptyList()
 )
 
 fun NobelPrize.toSummary() = NobelPrizeSummaryResponse(
-    year = year,
+    id = id,
+    awardYear = awardYear,
     category = category,
-    laureatesCount = laureates.size,
-    overallMotivation = overallMotivation
+    fullName = fullName,
+    motivation = motivation,
+    laureatesCount = laureates?.size ?: 0
 )
 
 fun Laureate.toResponse() = LaureateResponseDto(
     id = id,
-    firstName = firstName,
-    lastName = lastName,
+    prizeId = prizeId,
+    fullName = fullName,
+    portion = portion,
     motivation = motivation,
-    share = share
+    portraitUrl = portraitUrl
 )

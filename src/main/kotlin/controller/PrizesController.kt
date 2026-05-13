@@ -9,14 +9,11 @@ import io.ktor.server.auth.authenticate
 import org.example.data.dto.LaureateResponseDto
 import org.example.data.dto.NobelPrizeResponseDto
 import org.example.data.mapper.toResponse
-import org.example.data.mapper.toSummary
 import org.example.domain.usecase.GetLaureatesUseCase
-import org.example.domain.usecase.GetPrizeUseCase
 import org.example.domain.usecase.GetPrizesUseCase
 
 class PrizesController(
     private val getPrizesUseCase: GetPrizesUseCase,
-    private val getPrizeUseCase: GetPrizeUseCase,
     private val getLaureatesUseCase: GetLaureatesUseCase
 ) {
     fun configure(application: Application) {
@@ -24,28 +21,12 @@ class PrizesController(
             authenticate("auth-jwt") {
                 get("/prizes", {
                     tags = listOf("Prizes")
-                    description = "Get list of all Nobel Prizes"
-                    response {
-                        HttpStatusCode.OK to {
-                            description = "List of all prizes"
-                            body<List<NobelPrizeResponseDto>> {
-                                description = "Summary of each Nobel Prize"
-                            }
-                        }
-                    }
-                }) {
-                    val prizes = getPrizesUseCase()
-                    call.respond(HttpStatusCode.OK, prizes.map { it.toSummary() })
-                }
-
-                get("/prizes/{year}/{category}", {
-                    tags = listOf("Prizes")
                     description = "Get a specific Nobel Prize by year and category"
                     request {
-                        pathParameter<Int>("year") {
+                        queryParameter<Int>("year") {
                             description = "The year of the Nobel Prize"
                         }
-                        pathParameter<String>("category") {
+                        queryParameter<String>("category") {
                             description = "The category of the Nobel Prize (e.g. physics, chemistry)"
                         }
                     }
@@ -67,15 +48,7 @@ class PrizesController(
                     val year = call.parameters["year"]?.toIntOrNull()
                     val category = call.parameters["category"]
 
-                    if (year == null || category == null) {
-                        call.respond(
-                            HttpStatusCode.BadRequest,
-                            mapOf("error" to "Укажите год (число) и категорию")
-                        )
-                        return@get
-                    }
-
-                    val prize = getPrizeUseCase(year, category)
+                    val prize = getPrizesUseCase(year, category)
                     if (prize == null) {
                         call.respond(
                             HttpStatusCode.NotFound,

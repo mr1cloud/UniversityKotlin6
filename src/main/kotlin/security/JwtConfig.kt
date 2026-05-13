@@ -3,6 +3,7 @@ package org.example.security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.JWTVerifier
+import org.example.domain.model.User
 import java.util.Date
 
 object JwtConfig {
@@ -17,12 +18,13 @@ object JwtConfig {
         .withIssuer(ISSUER)
         .build()
 
-    fun generateToken(username: String, role: String): String {
+    fun generateToken(user: User): String {
         return JWT.create()
             .withAudience(AUDIENCE)
             .withIssuer(ISSUER)
-            .withClaim("username", username)
-            .withClaim("role", role)
+            .withClaim("username", user.username)
+            .withClaim("role", user.role)
+            .withClaim("userId", user.id)
             .withExpiresAt(Date(System.currentTimeMillis() + VALIDITY))
             .sign(Algorithm.HMAC256(SECRET))
     }

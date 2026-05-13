@@ -4,5 +4,6 @@ import org.example.domain.model.NobelPrize
 import org.example.domain.repository.NobelRepository
 
 class GetPrizesUseCase(private val repository: NobelRepository) {
-    operator fun invoke(): List<NobelPrize> = repository.getAllPrizes()
+    suspend operator fun invoke(year: Int?, category: String?): NobelPrize? =
+        repository.getAllPrizes(year, category)
 }

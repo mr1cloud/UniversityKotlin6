@@ -27,4 +27,5 @@ fun Application.configureRouting() {
 
     AppContainer.authController.configure(this)
     AppContainer.prizesController.configure(this)
+    AppContainer.favoritesController.configure(this)
 }

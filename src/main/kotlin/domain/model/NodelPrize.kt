@@ -1,8 +1,11 @@
 package org.example.domain.model
 
 data class NobelPrize(
-    val year: Int,
+    val id: Int,
+    val awardYear: Int,
     val category: String,
-    val overallMotivation: String?,
-    val laureates: List<Laureate>
+    val fullName: String,
+    val motivation: String?,
+    val detailLink: String?,
+    val laureates: List<Laureate>?
 )

@@ -14,12 +14,14 @@ fun Application.configureAuthentication() {
             verifier { JwtConfig.verifier }
             validate { credential ->
                 val username = credential.payload.getClaim("username").asString()
+                val userId = credential.payload.getClaim("userId").asInt()
                 val exp = credential.payload.expiresAt?.time ?: 0
                 val now = System.currentTimeMillis()
                 val expired = exp < now
 
                 println("JWT validate called:")
                 println("  username: $username")
+                println("  userId: $userId")
                 println("  exp: $exp")
                 println("  now: $now")
                 println("  expired: $expired")
